@@ -1,0 +1,20 @@
+services:
+  python-lab:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: python-lab
+    volumes:
+      - .:/work_space # lấy tất cả file ở trong đường dẫn hiện tại của máy mình đưa vào thư mục work_space ở linux docker
+    networks:
+      - my-net
+    container_name: python-lab
+    ports:
+      - "8000:8000"
+    # đang đứng trong thư mục work_space
+    entrypoint: ["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    
+
+networks:
+  my-net:
+    driver: bridge
